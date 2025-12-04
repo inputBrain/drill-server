@@ -19,7 +19,7 @@ public class UserController : AbstractClientController<UserController>
     [ProducesResponseType(typeof(CreateUser.CreateUserResponse), 200)]
     public async Task<UserDto> CreateUser([FromBody] CreateUser request)
     {
-        var user = await DatabaseContainer.User.CreateModel(request.Email, request.FirstName,request.LastName, DateTime.UtcNow);
+        var user = await DatabaseContainer.User.CreateModel(request.Email, request.FirstName,request.LastName, DateTimeOffset.UtcNow);
 
         return UserCodec.EncodeUser(user);
     }
