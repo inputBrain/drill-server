@@ -13,4 +13,4 @@ public class DrillDto
     public long CreatedAt { get; set; }
 
     public List<UserDto> Users { get; set; } = new();
-}
+} 

@@ -39,9 +39,9 @@ public class Startup
                 (
                     "apiDocumentation",
                     policy =>
-                        policy.WithOrigins("*")
-                            .WithMethods("POST", "GET", "DELETE")
-                            .WithHeaders("*")
+                        policy.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
                 );
             }
         );
@@ -98,6 +98,9 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        // ВАЖЛИВО: CORS має бути між UseRouting і UseAuthorization
+        app.UseCors("apiDocumentation");
 
         app.UseAuthorization();
 
