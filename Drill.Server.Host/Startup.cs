@@ -35,6 +35,13 @@ public class Startup
                             .WithMethods("POST", "GET", "DELETE", "OPTIONS")
                             .WithHeaders("*")
                 );
+                // TODO: ДЛЯ PRODUCTION ЗАМІНИТИ AllowAnyOrigin() на конкретні origin:
+                // Якщо є домен:
+                //   policy.WithOrigins("https://your-domain.com", "http://your-domain.com")
+                // Якщо тільки IP:
+                //   policy.WithOrigins("http://123.45.67.89:3000", "https://123.45.67.89:3000")
+                // Також можна додати кілька origin:
+                //   policy.WithOrigins("http://localhost:3000", "https://your-domain.com")
                 options.AddPolicy
                 (
                     "apiDocumentation",
