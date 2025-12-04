@@ -18,11 +18,39 @@ public class UserDrillRepository(PostgreSqlContext context, ILoggerFactory logge
         return result;
     }
 
+    public async Task<List<UserDrillModel>> StartDrills(List<int> userIds, int drillId, DateTimeOffset startedAt)
+    {
+        var models = new List<UserDrillModel>();
+
+        foreach (var userId in userIds)
+        {
+            var model = await StartDrill(userId, drillId, startedAt);
+            models.Add(model);
+        }
+
+        return models;
+    }
+
 
     public async Task StoppedDrill(UserDrillModel model, DateTimeOffset stoppedAt)
     {
         model.StopDrill(model, stoppedAt);
         await UpdateModelAsync(model);
+    }
+
+    public async Task StopDrills(List<int> userIds, int drillId, DateTimeOffset stoppedAt)
+    {
+        foreach (var userId in userIds)
+        {
+            var model = await DbModel
+                .Where(x => x.UserId == userId && x.DrillId == drillId && x.StoppedAt == null)
+                .FirstOrDefaultAsync();
+
+            if (model != null)
+            {
+                await StoppedDrill(model, stoppedAt);
+            }
+        }
     }
 
 
@@ -38,7 +66,42 @@ public class UserDrillRepository(PostgreSqlContext context, ILoggerFactory logge
         {
             throw new Exception("UserDrillModel not found in db");
         }
-        
+
         return model;
+    }
+
+    public async Task<List<UserDrillModel>> GetUserDrillsByDrillId(int drillId)
+    {
+        return await DbModel
+            .Include(x => x.User)
+            .Include(x => x.Drill)
+            .Where(x => x.DrillId == drillId)
+            .ToListAsync();
+    }
+
+    public async Task<List<UserDrillModel>> GetActiveUserDrills()
+    {
+        return await DbModel
+            .Include(x => x.User)
+            .Include(x => x.Drill)
+            .Where(x => x.StoppedAt == null)
+            .ToListAsync();
+    }
+
+    public async Task<List<UserDrillModel>> GetCompletedUserDrills()
+    {
+        return await DbModel
+            .Include(x => x.User)
+            .Include(x => x.Drill)
+            .Where(x => x.StoppedAt != null)
+            .ToListAsync();
+    }
+
+    public async Task<List<UserDrillModel>> ListAll()
+    {
+        return await DbModel
+            .Include(x => x.User)
+            .Include(x => x.Drill)
+            .ToListAsync();
     }
 }

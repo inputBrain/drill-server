@@ -8,4 +8,6 @@ public interface IUserRepository
         string lastName,
         DateTimeOffset createdAt
     );
+
+    Task<List<UserModel>> ListAll();
 }

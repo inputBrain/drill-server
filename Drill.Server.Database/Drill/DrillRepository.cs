@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Drill.Server.Database.Drill;
 
@@ -15,5 +16,17 @@ public class DrillRepository(PostgreSqlContext context, ILoggerFactory loggerFac
         }
 
         return result;
+    }
+
+    public async Task<List<DrillModel>> ListAll()
+    {
+        return await DbModel
+            .ToListAsync();
+    }
+
+    public async Task<DrillModel?> GetById(int drillId)
+    {
+        return await DbModel
+            .FirstOrDefaultAsync(x => x.Id == drillId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Drill.Server.Database.User;
 
@@ -20,5 +21,11 @@ public class UserRepository(PostgreSqlContext context, ILoggerFactory loggerFact
         }
 
         return result;
+    }
+
+    public async Task<List<UserModel>> ListAll()
+    {
+        return await DbModel
+            .ToListAsync();
     }
 }

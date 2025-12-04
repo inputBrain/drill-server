@@ -23,4 +23,13 @@ public class UserController : AbstractClientController<UserController>
 
         return UserCodec.EncodeUser(user);
     }
+
+    [HttpGet("list")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(List<UserDto>), 200)]
+    public async Task<List<UserDto>> ListAllUsers()
+    {
+        var users = await DatabaseContainer.User.ListAll();
+        return users.Select(UserCodec.EncodeUser).ToList();
+    }
 }
