@@ -29,4 +29,36 @@ public class DrillRepository(PostgreSqlContext context, ILoggerFactory loggerFac
         return await DbModel
             .FirstOrDefaultAsync(x => x.Id == drillId);
     }
+
+    public async Task<DrillModel?> UpdateDrill(int drillId, string title, float pricePerMinute)
+    {
+        var model = await GetById(drillId);
+        if (model == null)
+        {
+            return null;
+        }
+
+        if (model.IsSame(title, pricePerMinute))
+        {
+            return model;
+        }
+
+        model.Title = title;
+        model.PricePerMinute = pricePerMinute;
+
+        await UpdateModelAsync(model);
+
+        return model;
+    }
+
+    public async Task DeleteDrill(int drillId)
+    {
+        var model = await GetById(drillId);
+        if (model == null)
+        {
+            throw new Exception($"Drill with id {drillId} not found");
+        }
+
+        await DeleteModel(model);
+    }
 }

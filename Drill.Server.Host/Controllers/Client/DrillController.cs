@@ -79,4 +79,27 @@ public class DrillController : AbstractClientController<DrillController>
 
         return result;
     }
+
+    [HttpPatch]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(UpdateDrill.UpdateDrillResponse), 200)]
+    public async Task<UpdateDrill.UpdateDrillResponse> UpdateDrill([FromBody] UpdateDrill request)
+    {
+        var drill = await DatabaseContainer.Drill.UpdateDrill(request.drillId, request.Title, request.PricePerMinute);
+
+        if (drill == null)
+        {
+            throw new Exception($"Drill with id {request.drillId} not found");
+        }
+
+        return new UpdateDrill.UpdateDrillResponse(DrillCodec.EncodeDrill(drill));
+    }
+
+    [HttpDelete]
+    [AllowAnonymous]
+    [ProducesResponseType(200)]
+    public async Task DeleteDrill([FromBody] DeleteDrill request)
+    {
+        await DatabaseContainer.Drill.DeleteDrill(request.drillId);
+    }
 }

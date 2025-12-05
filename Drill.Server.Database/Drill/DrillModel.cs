@@ -25,4 +25,9 @@ public class DrillModel : AbstractModel
             CreatedAt = createdAt
         };
     }
+
+    public bool IsSame(string title, float pricePerMinute)
+    {
+        return Title == title && Math.Abs(PricePerMinute - pricePerMinute) < 0.001f;
+    }
 }

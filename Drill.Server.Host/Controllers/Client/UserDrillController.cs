@@ -1,5 +1,6 @@
 using Drill.Api.Codec;
 using Drill.Api.Payload.UserDrill;
+using Drill.Api.UserDrill;
 using Drill.Server.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,5 +39,13 @@ public class UserDrillController : AbstractClientController<UserDrillController>
     {
         var userDrills = await DatabaseContainer.UserDrill.GetCompletedUserDrills();
         return userDrills.Select(UserDrillCodec.EncodeUserDrill).ToList();
+    }
+
+    [HttpDelete]
+    [AllowAnonymous]
+    [ProducesResponseType(200)]
+    public async Task DeleteUserDrill([FromBody] DeleteUserDrill request)
+    {
+        await DatabaseContainer.UserDrill.DeleteUserDrill(request.UserId, request.DrillId);
     }
 }

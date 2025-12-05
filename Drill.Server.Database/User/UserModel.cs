@@ -36,4 +36,9 @@ public class UserModel : AbstractModel
             CreatedAt = createdAt
         };
     }
+
+    public bool IsSame(string? email, string firstName, string lastName)
+    {
+        return Email == email && FirstName == firstName && LastName == lastName;
+    }
 }

@@ -19,4 +19,6 @@ public interface IUserDrillRepository
     Task<List<UserDrillModel>> GetCompletedUserDrills();
 
     Task<List<UserDrillModel>> ListAll();
+
+    Task DeleteUserDrill(int userId, int drillId);
 }

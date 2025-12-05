@@ -7,4 +7,8 @@ public interface IDrillRepository
     Task<List<DrillModel>> ListAll();
 
     Task<DrillModel?> GetById(int drillId);
+
+    Task<DrillModel?> UpdateDrill(int drillId, string title, float pricePerMinute);
+
+    Task DeleteDrill(int drillId);
 }

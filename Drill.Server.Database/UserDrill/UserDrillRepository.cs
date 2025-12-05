@@ -104,4 +104,18 @@ public class UserDrillRepository(PostgreSqlContext context, ILoggerFactory logge
             .Include(x => x.Drill)
             .ToListAsync();
     }
+
+    public async Task DeleteUserDrill(int userId, int drillId)
+    {
+        var model = await DbModel
+            .Where(x => x.UserId == userId && x.DrillId == drillId)
+            .FirstOrDefaultAsync();
+
+        if (model == null)
+        {
+            throw new Exception($"UserDrill with userId {userId} and drillId {drillId} not found");
+        }
+
+        await DeleteModel(model);
+    }
 }

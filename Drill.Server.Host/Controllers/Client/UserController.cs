@@ -32,4 +32,27 @@ public class UserController : AbstractClientController<UserController>
         var users = await DatabaseContainer.User.ListAll();
         return users.Select(UserCodec.EncodeUser).ToList();
     }
+
+    [HttpPatch]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(UpdateUser.UpdateUserResponse), 200)]
+    public async Task<UpdateUser.UpdateUserResponse> UpdateUser([FromBody] UpdateUser request)
+    {
+        var user = await DatabaseContainer.User.UpdateUser(request.UserId, request.Email, request.FirstName, request.LastName);
+
+        if (user == null)
+        {
+            throw new Exception($"User with id {request.UserId} not found");
+        }
+
+        return new UpdateUser.UpdateUserResponse(UserCodec.EncodeUser(user));
+    }
+
+    [HttpDelete]
+    [AllowAnonymous]
+    [ProducesResponseType(200)]
+    public async Task DeleteUser([FromBody] DeleteUser request)
+    {
+        await DatabaseContainer.User.DeleteUser(request.UserId);
+    }
 }
