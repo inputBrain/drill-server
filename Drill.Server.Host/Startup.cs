@@ -31,18 +31,23 @@ public class Startup
                 (
                     "CorsPolicy",
                     policy =>
-                        policy.WithOrigins(Configuration.GetSection("AllowedHosts").Value!)
-                            .WithMethods("POST", "GET", "DELETE", "OPTIONS")
-                            .WithHeaders("*")
+                        policy.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
                 );
                 options.AddPolicy
                 (
                     "apiDocumentation",
                     policy =>
                         policy.WithOrigins(
+                                "http://localhost:2000",
+                                "http://localhost:2500",
                                 "http://localhost:3000",
-                                "http://164.92.199.150:3500",
-                                "https://164.92.199.150:3500"
+                                "http://159.223.22.96",
+                                "http://159.223.22.96:2000",
+                                "http://159.223.22.96:2500",
+                                "http://159.223.22.96:3000",
+                                "http://159.223.22.96:5000"
                             )
                             .AllowAnyMethod()
                             .AllowAnyHeader()
