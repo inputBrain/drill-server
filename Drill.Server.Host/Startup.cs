@@ -31,22 +31,20 @@ public class Startup
                 (
                     "CorsPolicy",
                     policy =>
-                        policy.AllowAnyOrigin()
+                        policy.WithOrigins(Configuration.GetSection("AllowedHosts").Value!)
                             .AllowAnyMethod()
-                            .AllowAnyHeader()
+                            .WithHeaders("*")
                 );
                 options.AddPolicy
                 (
                     "apiDocumentation",
                     policy =>
-                        policy.AllowAnyOrigin()
+                        policy.WithOrigins("*")
                             .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials()
+                            .WithHeaders("*")
                 );
             }
         );
-        // services.Configure<ImageConfig>(Configuration.GetSection("Image"));
         
 
 
