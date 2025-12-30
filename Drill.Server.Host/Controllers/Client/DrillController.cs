@@ -24,7 +24,7 @@ public class DrillController : AbstractClientController<DrillController>
         return DrillCodec.EncodeDrill(drill);
     }
 
-    [HttpPost("start")]
+    [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(typeof(StartDrill.StartDrillResponse), 200)]
     public async Task<StartDrill.StartDrillResponse> StartDrill([FromBody] StartDrill request)
@@ -43,7 +43,7 @@ public class DrillController : AbstractClientController<DrillController>
         return new StartDrill.StartDrillResponse(drillDto);
     }
 
-    [HttpPost("stop")]
+    [HttpPost]
     [AllowAnonymous]
     [ProducesResponseType(typeof(StopDrill.StopDrillResponse), 200)]
     public async Task<StopDrill.StopDrillResponse> StopDrill([FromBody] StopDrill request)
@@ -62,7 +62,7 @@ public class DrillController : AbstractClientController<DrillController>
         return new StopDrill.StopDrillResponse(drillDto);
     }
 
-    [HttpGet("list")]
+    [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(List<DrillDto>), 200)]
     public async Task<List<DrillDto>> ListAllDrills()

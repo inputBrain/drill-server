@@ -24,7 +24,7 @@ public class UserController : AbstractClientController<UserController>
         return UserCodec.EncodeUser(user);
     }
 
-    [HttpGet("list")]
+    [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(List<UserDto>), 200)]
     public async Task<List<UserDto>> ListAllUsers()

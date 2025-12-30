@@ -14,7 +14,7 @@ public class UserDrillController : AbstractClientController<UserDrillController>
     }
 
 
-    [HttpGet("list")]
+    [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(List<UserDrillDto>), 200)]
     public async Task<List<UserDrillDto>> ListAll()
@@ -23,7 +23,7 @@ public class UserDrillController : AbstractClientController<UserDrillController>
         return userDrills.Select(UserDrillCodec.EncodeUserDrill).ToList();
     }
 
-    [HttpGet("active")]
+    [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(List<UserDrillDto>), 200)]
     public async Task<List<UserDrillDto>> GetActive()
@@ -32,7 +32,7 @@ public class UserDrillController : AbstractClientController<UserDrillController>
         return userDrills.Select(UserDrillCodec.EncodeUserDrill).ToList();
     }
 
-    [HttpGet("completed")]
+    [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(List<UserDrillDto>), 200)]
     public async Task<List<UserDrillDto>> GetCompleted()

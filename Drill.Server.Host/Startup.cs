@@ -39,16 +39,7 @@ public class Startup
                 (
                     "apiDocumentation",
                     policy =>
-                        policy.WithOrigins(
-                                "http://localhost:2000",
-                                "http://localhost:2500",
-                                "http://localhost:3000",
-                                "http://159.223.22.96",
-                                "http://159.223.22.96:2000",
-                                "http://159.223.22.96:2500",
-                                "http://159.223.22.96:3000",
-                                "http://159.223.22.96:5000"
-                            )
+                        policy.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials()
