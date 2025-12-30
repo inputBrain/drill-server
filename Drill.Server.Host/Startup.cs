@@ -31,17 +31,25 @@ public class Startup
                 (
                     "CorsPolicy",
                     policy =>
-                        policy.WithOrigins(Configuration.GetSection("AllowedHosts").Value!)
+                        policy.WithOrigins(
+                                "http://localhost:3000",
+                                "http://localhost:2000",
+                                "http://localhost:2500",
+                                "http://159.223.22.96",
+                                "http://159.223.22.96:3500",
+                                "http://159.223.22.96:4000"
+                            )
                             .AllowAnyMethod()
-                            .WithHeaders("*")
+                            .AllowAnyHeader()
+                            .AllowCredentials()
                 );
                 options.AddPolicy
                 (
                     "apiDocumentation",
                     policy =>
-                        policy.WithOrigins("*")
+                        policy.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .WithHeaders("*")
+                            .AllowAnyHeader()
                 );
             }
         );
@@ -98,7 +106,7 @@ public class Startup
 
         app.UseRouting();
 
-        app.UseCors("apiDocumentation");
+        app.UseCors("CorsPolicy");
 
         app.UseAuthorization();
 
