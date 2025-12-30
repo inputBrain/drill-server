@@ -1,9 +1,13 @@
-﻿namespace Drill.Api.Drill;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Drill.Api.Drill;
 
 public class CreateDrill
 {
+    [Required]
     public string Title { get; set; }
     
+    [Required]
     public float PricePerMinute { get; set; }
     
     
